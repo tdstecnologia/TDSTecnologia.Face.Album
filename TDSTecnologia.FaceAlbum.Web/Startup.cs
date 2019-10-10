@@ -16,6 +16,7 @@ namespace TDSTecnologia.FaceAlbum.Web
         {
             app.UseDeveloperExceptionPage();
             app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();
         }
     }
 }
