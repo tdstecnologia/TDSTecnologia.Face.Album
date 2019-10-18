@@ -13,23 +13,29 @@ namespace TDSTecnologia.FaceAlbum.Web.Models
 
         [Required(ErrorMessage = "Campo obrigatório")]
         [StringLength(50, ErrorMessage = "Limite de 50 caracteres")]
-        [Column("destino")]
-        public string Destino { get; set; }
+        [Column("titulo")]
+        public string Titulo { get; set; }
 
-        [Column("fototopo")]
-        public string FotoTopo { get; set; }
+
+        [Required(ErrorMessage = "Campo obrigatório")]
+        [StringLength(50, ErrorMessage = "Limite de 50 caracteres")]
+        [Column("descricao")]
+        public string Descricao { get; set; }
+
+        [Column("capa")]
+        public string Capa { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Campo obrigatório")]
         [Column("dt_inicio")]
-        public DateTime Inicio { get; set; }
+        public DateTime DataInicio { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Campo obrigatório")]
         [Column("dt_fim")]
-        public DateTime Fim { get; set; }
+        public DateTime DataFim { get; set; }
 
         //public ICollection<Imagem> Imagens { get; set; }
     }

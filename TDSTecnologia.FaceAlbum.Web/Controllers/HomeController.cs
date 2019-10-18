@@ -49,7 +49,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Novo()
         {
             return View();
         }
@@ -57,7 +57,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlbumId,Destino,FotoTopo,Inicio,Fim")] Album album, IFormFile arquivo)
+        public async Task<IActionResult> Novo([Bind("AlbumId,Titulo,Descricao,Capa,DataInicio,")] Album album, IFormFile arquivo)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
                     using (var fileStream = new FileStream(Path.Combine(linkUpload, arquivo.FileName), FileMode.Create))
                     {
                         await arquivo.CopyToAsync(fileStream);
-                        album.FotoTopo = "~/Imagens/" + arquivo.FileName;
+                        album.Capa = "~/Imagens/" + arquivo.FileName;
                     }
                 }
 
@@ -93,7 +93,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
                 return NotFound();
             }
 
-            TempData["FotoTopo"] = album.FotoTopo;
+            TempData["Capa"] = album.Capa;
 
             return View(album);
         }
@@ -101,16 +101,17 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Destino,FotoTopo,Inicio,Fim")] Album album, IFormFile arquivo)
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Titulo,Descricao,Capa,DataInicio")] Album album, IFormFile arquivo)
         {
             if (id != album.AlbumId)
             {
                 return NotFound();
             }
 
-            if (String.IsNullOrEmpty(album.FotoTopo))
-                album.FotoTopo = TempData["FotoTopo"].ToString();
-
+            if (String.IsNullOrEmpty(album.Capa))
+            {
+                album.Capa = TempData["Capa"].ToString();
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -122,7 +123,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
                         using (var fileStream = new FileStream(Path.Combine(linkUpload, arquivo.FileName), FileMode.Create))
                         {
                             await arquivo.CopyToAsync(fileStream);
-                            album.FotoTopo = "~/Imagens/" + arquivo.FileName;
+                            album.Capa = "~/Imagens/" + arquivo.FileName;
                         }
                     }
 
@@ -160,7 +161,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
             _context.Imagens.RemoveRange(_context.Imagens.Where(x => x.AlbumId == AlbumId));
 
-            string linkFotoAlbum = album.FotoTopo;
+            string linkFotoAlbum = album.Capa;
             linkFotoAlbum = linkFotoAlbum.Replace("~", "wwwroot");
             System.IO.File.Delete(linkFotoAlbum);
             _context.Albuns.Remove(album);

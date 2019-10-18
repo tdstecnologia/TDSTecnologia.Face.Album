@@ -1,0 +1,10 @@
+﻿@model IEnumerable<TDSTecnologia.FaceAlbum.Web.Models.Imagem>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col s3">
+            <img src="@Url.Content(item.Link)" width="350" height="350" />
+        </div>
+    }
+</div>

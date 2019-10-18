@@ -1,0 +1,76 @@
+﻿@model TDSTecnologia.FaceAlbum.Web.Models.Album
+
+@{
+    ViewData["Title"] = "Atualizar " + Model.Titulo;
+}
+
+
+<div class="formulario">
+    <div class="row">
+        <div class="col-12 col-lg-8 offset-lg-2">
+            <h5>Atualizar Album @Model.Titulo</h5>
+            <hr />
+
+
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AlbumId" />
+
+                <div class="form-group">
+                    <label asp-for="Titulo" class="control-label"></label>
+                    <input asp-for="Titulo" class="form-control" />
+                    <span asp-validation-for="Titulo" class="text-danger"></span>
+                </div>
+
+                @if (Model.Capa != null)
+                {
+                    <img id="imagem" src="@Url.Content(Model.Capa)" width="250" height="250" alt="Foto" />
+                }
+                else
+                {
+                    <img id="imagem" src="#" width="250" height="250" alt="Foto" />
+                }
+
+
+                <div class="file-field form-group">
+                    <div class="btn-small">
+                        <span>Selecione o arquivo</span>
+                        <input asp-for="Capa" class="btn btn-primary form-control" type="file" name="arquivo" onchange="CarregarImagem(this)" />
+                        <span asp-validation-for="Capa" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Descricao" class="control-label"></label>
+                    <input asp-for="Descricao" class="form-control" />
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DataInicio" class="control-label"></label>
+                    <input asp-for="DataInicio" class="form-control datepicker" type="text" />
+                    <span asp-validation-for="DataInicio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Atualizar" class="btn btn-primary" /> &nbsp;
+                    <a asp-action="Index" class="btn-small grey darken-3">Voltar</a>
+                </div>
+            </form>
+        </div>
+        </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        function CarregarImagem(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#imagem").attr('src', e.target.result).width(250).height(250);
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+}

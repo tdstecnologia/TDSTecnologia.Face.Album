@@ -1,0 +1,61 @@
+﻿@model TDSTecnologia.FaceAlbum.Web.Models.Album
+
+@{
+    ViewData["Title"] = "Novo";
+}
+
+<div>
+    <h1 class="text-center">Criar Album</h1>
+</div>
+<hr />
+<div class="row">
+    <div class="col-12 col-lg-8 offset-lg-2">
+        <form asp-action="Novo" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <img src="#" name="arquivo" id="arquivo" height="300" width="300" class="border border-secondary rounded" style="display: none;" />
+            </div>
+            <div class="form-group">
+                <label for="arquivo" class="control-label"></label>
+                <input type="file" class="btn btn-primary form-control" name="arquivo" id="arquivo" onchange="CarregarImagem(this)" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label">Título</label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label">Descrição</label>
+                <textarea asp-for="Descricao" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataInicio" class="control-label">Data</label>
+                <input asp-for="DataInicio" class="form-control" type="date" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+        <div>
+            <a asp-action="Index">Voltar</a>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function CarregarImagem(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#arquivo" ).show();
+                    $("#arquivo").attr('src', e.target.result);
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+
+}

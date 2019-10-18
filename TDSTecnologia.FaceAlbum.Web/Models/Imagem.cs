@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TDSTecnologia.FaceAlbum.Web.Models
 {
-    [Table("tb01_imagem")]
+    [Table("tb02_imagem")]
     public class Imagem
     {
         [Key]
