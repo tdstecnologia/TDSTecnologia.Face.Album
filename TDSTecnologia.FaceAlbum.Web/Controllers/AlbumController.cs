@@ -12,13 +12,13 @@ using TDSTecnologia.FaceAlbum.Web.Models;
 
 namespace TDSTecnologia.FaceAlbum.Web.Controllers
 {
-    public class HomeController : Controller
+    public class AlbumController : Controller
     {
 
         private readonly AppContexto _context;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public HomeController(AppContexto context, IHostingEnvironment hostingEnvironment)
+        public AlbumController(AppContexto context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
@@ -31,7 +31,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Detalhes(int? id)
         {
             if (id == null)
             {
@@ -80,7 +80,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Alterar(int? id)
         {
             if (id == null)
             {
@@ -101,7 +101,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumId,Titulo,Descricao,Capa,DataInicio")] Album album, IFormFile arquivo)
+        public async Task<IActionResult> Alterar(int id, [Bind("AlbumId,Titulo,Descricao,Capa,DataInicio")] Album album, IFormFile arquivo)
         {
             if (id != album.AlbumId)
             {
@@ -148,7 +148,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
 
         [HttpPost]
-        public async Task<JsonResult> Delete(int AlbumId)
+        public async Task<JsonResult> Excluir(int AlbumId)
         {
             var album = await _context.Albuns.FindAsync(AlbumId);
             IEnumerable<string> links = _context.Imagens.Where(i => i.AlbumId == AlbumId).Select(i => i.Link);

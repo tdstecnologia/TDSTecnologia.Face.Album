@@ -27,8 +27,11 @@ namespace TDSTecnologia.FaceAlbum.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseDeveloperExceptionPage();
-            app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
+            app.UseMvc(options=>
+            {
+                options.MapRoute(name: "default", template:"{controller=Album}/{action=Index}/{id?}");
+            });
         }
     }
 }

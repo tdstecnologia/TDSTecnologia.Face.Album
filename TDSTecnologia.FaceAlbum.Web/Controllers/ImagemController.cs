@@ -10,12 +10,12 @@ using TDSTecnologia.FaceAlbum.Web.Models;
 
 namespace TDSTecnologia.FaceAlbum.Web.Controllers
 {
-    public class ImagensController : Controller
+    public class ImagemController : Controller
     {
         private readonly AppContexto _context;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ImagensController(AppContexto context, IHostingEnvironment hostingEnvironment)
+        public ImagemController(AppContexto context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
@@ -23,7 +23,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Create(int id)
+        public IActionResult Novo(int id)
         {
             ViewBag.Destinos = _context.Albuns.FirstOrDefault(x => x.AlbumId == id);
             return View();
@@ -31,7 +31,7 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImagemId,Link,AlbumId")] Imagem imagem, IFormFile arquivo)
+        public async Task<IActionResult> Novo([Bind("ImagemId,Link,AlbumId")] Imagem imagem, IFormFile arquivo)
         {
             if (ModelState.IsValid)
             {
@@ -48,9 +48,9 @@ namespace TDSTecnologia.FaceAlbum.Web.Controllers
 
                 _context.Add(imagem);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details/", "Albuns", new { id = imagem.AlbumId });
+                return RedirectToAction("Detalhes/", "Album", new { id = imagem.AlbumId });
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albuns, "AlbumId", "Destino", imagem.AlbumId);
+            ViewData["AlbumId"] = new SelectList(_context.Albuns, "AlbumId", "Titulo", imagem.AlbumId);
             return View(imagem);
         }
 

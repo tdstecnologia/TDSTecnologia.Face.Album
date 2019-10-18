@@ -7,7 +7,9 @@
 <div class="listaDestinos">
     <div class="container">
         <p>
-            <a asp-action="Novo" class="waves-effect waves-light btn-small">Novo album</a>
+            <a asp-action="Novo" class="btn btn-sm btn-success">
+                <i class="fas fa-plus fa-lg"></i> Novo album
+            </a>
         </p>
         <table class="table striped highlight hover responsive-table">
             <thead>
@@ -34,9 +36,9 @@
                             @Html.DisplayFor(modelItem => item.DataInicio)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.AlbumId" class="btn-small blue darken-2">Atualizar</a> |
-                            <a asp-action="Details" asp-route-id="@item.AlbumId" class="btn-small orange darken-4">Fotos</a> |
-                            <a class="btn-small red darken-4 modal-trigger" data-target="modal1" onclick="Excluir(@item.AlbumId)">Excluir</a>
+                            <a asp-action="Alterar" asp-route-id="@item.AlbumId" class="btn btn-sm btn-warning">Atualizar</a> |
+                            <a asp-action="Detalhes" asp-route-id="@item.AlbumId" class="btn btn-sm btn-primary">Fotos</a> |
+                            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-excluir" onclick="Excluir(@item.AlbumId)">Excluir</a>
                         </td>
                     </tr>
                 }
@@ -45,14 +47,23 @@
     </div>
 </div>
 
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>Confirmar exclusão</h4>
-        <p>Deseja prosseguir com a exclusão ?</p>
-    </div>
-    <div class="modal-footer">
-        <a class="modal-close waves-effect waves-green btn-flat btnConfirmar">Sim</a>
-        <a class="modal-close waves-effect waves-green btn-flat">Não</a>
+<div class="modal fade" id="modal-excluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmar exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Após a exclusão não será possível recuperar o registro
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnConfirmar">Confimar Exclusão</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -61,7 +72,7 @@
         $(".modal").modal();
         $(".btnConfirmar").on('click', function () {
             $.ajax({
-                url: '/Albuns/Delete',
+                url: '/Album/Excluir',
                 type: 'POST',
                 data: { AlbumId: AlbumId },
                 success: function () {
